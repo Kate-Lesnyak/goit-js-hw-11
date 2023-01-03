@@ -1,0 +1,40 @@
+.form-wrapper {
+  position: fixed;
+  width: 100%;
+  background-color: darkslateblue;
+  padding: 8px;
+}
+
+#search-form {
+  font: inherit;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+input {
+  position: relative;
+  width: 100%;
+  border: none;
+  padding: 8px;
+  border-radius: 4px;
+  outline: none;
+}
+
+button {
+  // display: none;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  right: 0;
+  // translate: -100%;
+  // transform: translateX (-100%);
+  border: none;
+  padding: 8;
+  line-height: 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
