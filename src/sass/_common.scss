@@ -1,5 +1,21 @@
 @import "~node_modules/modern-normalize/modern-normalize.css";
 
+:root {
+  --timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  --animation-duration: 250ms;
+
+  --form-bgc: #45824a;
+  --submit-btn-color: #45824a;
+  --color-dark: #1e4020;
+  --color-light: #8fb091;
+  --border-color: 1px solid #eeeeee;
+
+  --box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+    0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+
+  --gap-set: 10px;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -11,10 +27,28 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #fafafa;
   color: #212121;
-  line-height: 1.5;
+  line-height: 1.15;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 img {
   display: block;
   max-width: 100%;
+  height: auto;
 }
