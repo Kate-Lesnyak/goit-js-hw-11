@@ -76,6 +76,16 @@
     background-color var(--animation-duration) var(--timing-function),
     box-shadow var(--animation-duration) var(--timing-function);
 
+  // opacity: 0;
+  // pointer-events: none;
+  // visibility: hidden;
+
+  // &.is-hidden {
+  //   opacity: 1;
+  //   pointer-events: painted;
+  //   visibility: visible;
+  // }
+
   &:hover,
   &:focus {
     color: var(--color-light);
@@ -84,20 +94,27 @@
   }
 }
 
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  border: 0;
-  padding: 0;
-  white-space: nowrap;
-  clip-path: inset(100%);
-  clip: rect(0 0 0 0);
-  overflow: hidden;
-}
+// .visually-hidden {
+//   position: absolute;
+//   width: 1px;
+//   height: 1px;
+//   margin: -1px;
+//   border: 0;
+//   padding: 0;
+//   white-space: nowrap;
+//   clip-path: inset(100%);
+//   clip: rect(0 0 0 0);
+//   overflow: hidden;
+// }
 
-// button[disabled] {
-//   color: rgb(255, 255, 255);
-//   background-color: rgba(255, 255, 255, 0.6);
+// .load-more {
+//   opacity: 0;
+//   pointer-events: none;
+//   visibility: hidden;
+// }
+
+// .load-more-btn.is-hidden {
+//   opacity: 1;
+//   pointer-events: painted;
+//   visibility: visible;
 // }
