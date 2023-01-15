@@ -1,7 +1,5 @@
 import { Notify } from "notiflix";
-
 import { fetchImages } from './fetch-images';
-
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
@@ -13,15 +11,11 @@ const refs = {
 
 let nameImage = '';
 let page = 1;
-const perPage = 200;
+const perPage = 40;
 let gallery = new SimpleLightbox('.js-gallery a', {
   captionsData: 'alt',
   captionDelay: 250,
 });
-
-refs.buttonLoadMore.hidden = true;
-
-console.dir(refs.buttonLoadMore);
 
 refs.form.addEventListener('submit', onFormSubmit);
 refs.buttonLoadMore.addEventListener('click', onButtonLoadMoreClick);
@@ -31,17 +25,13 @@ refs.buttonLoadMore.addEventListener('click', onButtonLoadMoreClick);
 //   e.preventDefault();
 
 //   nameImage = e.currentTarget.elements.searchQuery.value.trim();
-//   console.log(nameImage);
+//   refs.buttonLoadMore.classList.remove('is-hidden');
+//   clearGalleryImages();
+//   page = 1;
 
 //   if (!nameImage) {
 //     return Notify.info('Please, fill in the search field!');
 //   }
-
-//   // refs.buttonLoadMore.classList.add('visually-hidden');
-//   // refs.buttonLoadMore.hidden = true;
-
-//   clearGalleryImages();
-//   page = 1;
 
 //   if (nameImage) {
 //     fetchImages(nameImage)
@@ -49,8 +39,6 @@ refs.buttonLoadMore.addEventListener('click', onButtonLoadMoreClick);
 //         console.log(data);
 
 //         if (!data.hits.length) {
-//           // refs.buttonLoadMore.hidden = true;
-//           // refs.buttonLoadMore.classList.add('visually-hidden');
 //           return Notify.failure('Sorry, there are no images matching your search query. Please try again');
 //         }
 
@@ -59,42 +47,30 @@ refs.buttonLoadMore.addEventListener('click', onButtonLoadMoreClick);
 //         }
 
 //         if (data.totalHits < perPage) {
-//           // refs.buttonLoadMore.hidden = true;
-//           refs.buttonLoadMore.classList.add('visually-hidden');
+//           refs.buttonLoadMore.classList.remove('is-hidden');
 //         } else {
-//           // refs.buttonLoadMore.hidden = false;
-//           refs.buttonLoadMore.classList.remove('visually-hidden');
+//           refs.buttonLoadMore.classList.add('is-hidden');
 //         }
 
 //         renderImages(data);
-
-//         // *buttonLoadMore
-//         // refs.buttonLoadMore.hidden = false;
-//         // refs.buttonLoadMore.style.visibility = "visible";
-//         // refs.buttonLoadMore.classList.remove('visually-hidden');
-//         console.dir(refs.buttonLoadMore);
-
-//         // searchAllImages(data);
 //       })
 //       .catch(error => console.log(error))
 //       .finally(() => refs.form.reset());
 //   }
 // }
 
-// ! 2 вар
+// ! 2 вар async
 async function onFormSubmit(e) {
   try {
     e.preventDefault();
-
     nameImage = e.currentTarget.elements.searchQuery.value.trim();
-    console.log(nameImage);
+    refs.buttonLoadMore.classList.remove('is-hidden');
+    clearGalleryImages();
+    page = 1;
 
     if (!nameImage) {
       return Notify.info('Please, fill in the search field!');
     }
-
-    clearGalleryImages();
-    page = 1;
 
     if (nameImage) {
       const data = await fetchImages(nameImage);
@@ -108,23 +84,13 @@ async function onFormSubmit(e) {
       }
 
       if (data.totalHits < perPage) {
-        refs.buttonLoadMore.hidden = true;
-      } else {
-        refs.buttonLoadMore.hidden = false;
+        refs.buttonLoadMore.classList.remove('is-hidden');
+      }
+      else {
+        refs.buttonLoadMore.classList.add('is-hidden');
       }
 
-      // if (data.totalHits < perPage) {
-      //   refs.buttonLoadMore.classList.remove('is-hidden');
-      // }
-      // else {
-      //   refs.buttonLoadMore.classList.add('is-hidden');
-      // }
-
       renderImages(data);
-
-      // })
-      // .catch (error => console.log(error))
-      // .finally(() => refs.form.reset());
       refs.form.reset();
     }
   } catch (eroor) {
@@ -132,60 +98,40 @@ async function onFormSubmit(e) {
   }
 }
 
-
 // * 1 вар
 // function onButtonLoadMoreClick() {
 //   page += 1;
-//   console.log(page);
-
-//   // *buttonLoadMore
-//   // refs.buttonLoadMore.disabled = true;
 
 //   fetchImages(nameImage, page, perPage)
 //     .then(data => {
 //       console.log(data);
 
 //       if (data.hits.length < perPage) {
-//         // refs.buttonLoadMore.hidden = true;
-//         refs.buttonLoadMore.classList.add('visually-hidden');
-//         Notify.failure("We're sorry, but you've reached the end of search results");
+//         onFetchError();
 //       }
 
+// if (page * perPage >= data.totalHits) {
+//   onFetchError();
+// }// тогда  в cath без onFetchError()
+
 //       renderImages(data);
-
-
-
-//       // *buttonLoadMore
-//       // refs.buttonLoadMore.style.visibility = "visible";
-//       // refs.buttonLoadMore.disabled = false;
-
-//       console.dir(refs.galleryImages);
 //     })
-//     .catch(onFetchError);
-//   // .catch(error => console.log(error));
+//     .catch(error => {
+//       onFetchError();
+//       console.log(error);
+//     })
 // }
 
-// ! 2 вар
+// ! 2 вар async
 async function onButtonLoadMoreClick() {
   try {
     page += 1;
-    console.log(page);
-
-
-    // refs.buttonLoadMore.hidden = true;
 
     const data = await fetchImages(nameImage, page, perPage);
 
     if (data.hits.length < perPage) {
       onFetchError();
     }
-
-    // if (page * perPage >= data.totalHits) {
-    // onFetchError();
-
-    //   refs.buttonLoadMore.classList.remove('is-hidden');
-    //   Notify.failure("We're sorry, but you've reached the end of search results");
-    // }
 
     renderImages(data);
   } catch (error) {
@@ -195,9 +141,7 @@ async function onButtonLoadMoreClick() {
 }
 
 function onFetchError() {
-  // refs.buttonLoadMore.hidden = true;
-
-  // refs.buttonLoadMore.classList.remove('is-hidden');
+  refs.buttonLoadMore.classList.remove('is-hidden');
   return Notify.failure("We're sorry, but you've reached the end of search results");
 }
 
@@ -206,7 +150,7 @@ function renderImages({ hits }) {
 
     <a href="${largeImageURL}">
     <div class="card-thumb">
-		  <img src="${webformatURL}" alt="${tags}" loading="lazy"/>
+    <img src="${webformatURL}" alt="${tags}" loading="lazy"/>
       </div>
       </a>
 
@@ -226,8 +170,6 @@ function renderImages({ hits }) {
   </div>
 </div>`).join('');
 
-  console.log(refs.galleryImages.children.length);
-
   refs.galleryImages.insertAdjacentHTML('beforeend', markup);
 
   gallery.refresh();
@@ -235,6 +177,10 @@ function renderImages({ hits }) {
   if (page !== 1) {
     smoothScrolling();
   }
+}
+
+function clearGalleryImages() {
+  refs.galleryImages.innerHTML = '';
 }
 
 function smoothScrolling() {
@@ -249,8 +195,4 @@ function smoothScrolling() {
     top: cardHeight * 2,
     behavior: "smooth",
   });
-}
-
-function clearGalleryImages() {
-  refs.galleryImages.innerHTML = '';
 }

@@ -9,7 +9,7 @@
   padding-bottom: 30px;
 }
 .card-thumb {
-  height: 300px;
+  height: 200px;
   width: 100%;
 
   transform: scale(1);
@@ -21,6 +21,10 @@
     cursor: zoom-in;
     transform: scale(1.1);
   }
+
+  @media screen and (min-width: 1200px) {
+    height: 300px;
+  }
 }
 
 .card-thumb > img {
@@ -29,7 +33,8 @@
 }
 
 .photo-card {
-  flex-basis: calc((100% - 3 * var(--gap-set)) / 4);
+  flex-basis: calc((100% - var(--gap-set)) / 2);
+
   overflow: hidden;
 
   border-radius: 4px;
@@ -43,6 +48,14 @@
   &:hover,
   &:focus {
     box-shadow: var(--box-shadow);
+  }
+
+  @media screen and (min-width: 768px) {
+    flex-basis: calc((100% - 2 * var(--gap-set)) / 3);
+  }
+
+  @media screen and (min-width: 1200px) {
+    flex-basis: calc((100% - 3 * var(--gap-set)) / 4);
   }
 }
 
@@ -76,15 +89,15 @@
     background-color var(--animation-duration) var(--timing-function),
     box-shadow var(--animation-duration) var(--timing-function);
 
-  // opacity: 0;
-  // pointer-events: none;
-  // visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
 
-  // &.is-hidden {
-  //   opacity: 1;
-  //   pointer-events: painted;
-  //   visibility: visible;
-  // }
+  &.is-hidden {
+    opacity: 1;
+    pointer-events: painted;
+    visibility: visible;
+  }
 
   &:hover,
   &:focus {
@@ -93,28 +106,3 @@
     box-shadow: var(--box-shadow);
   }
 }
-
-// .visually-hidden {
-//   position: absolute;
-//   width: 1px;
-//   height: 1px;
-//   margin: -1px;
-//   border: 0;
-//   padding: 0;
-//   white-space: nowrap;
-//   clip-path: inset(100%);
-//   clip: rect(0 0 0 0);
-//   overflow: hidden;
-// }
-
-// .load-more {
-//   opacity: 0;
-//   pointer-events: none;
-//   visibility: hidden;
-// }
-
-// .load-more-btn.is-hidden {
-//   opacity: 1;
-//   pointer-events: painted;
-//   visibility: visible;
-// }
